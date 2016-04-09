@@ -1,5 +1,6 @@
 package org.yzr.poi.ui;
 
+import org.yzr.poi.App;
 import org.yzr.poi.utils.PropertiesManager;
 
 import javax.swing.*;
@@ -13,7 +14,7 @@ import java.io.File;
 public class ImageButton extends JButton {
 
     public ImageButton(String defaultIconName){
-        ImageIcon defaultIcon = new ImageIcon(ImageButton.class.getClassLoader().getResource(defaultIconName));
+        ImageIcon defaultIcon = new ImageIcon(App.class.getClassLoader().getResource(defaultIconName));
         this.setIcon(defaultIcon);
         this.setSize(defaultIcon.getIconWidth(), defaultIcon.getIconHeight());
         this.setOpaque(false);
@@ -26,7 +27,7 @@ public class ImageButton extends JButton {
 
     public ImageButton(String defaultIconName,String disableIconName) {
         this(defaultIconName);
-        ImageIcon disableIcon = new ImageIcon(ImageButton.class.getClassLoader().getResource(disableIconName));
+        ImageIcon disableIcon = new ImageIcon(App.class.getClassLoader().getResource(disableIconName));
         this.setDisabledIcon(disableIcon);
     }
 

@@ -4,10 +4,10 @@
 
   <groupId>org.yzr.poi</groupId>
   <artifactId>simpleLocalize</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <packaging>jar</packaging>
 
-  <name>ExcelDemo</name>
+  <name>simpleLocalize</name>
   <url>http://maven.apache.org</url>
 
   <properties>
@@ -42,6 +42,7 @@
     <profile>
       <id>code-generator</id>
         <build>
+            <finalName>${project.name}</finalName>
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
