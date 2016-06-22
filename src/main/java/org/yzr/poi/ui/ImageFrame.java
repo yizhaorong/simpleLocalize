@@ -1,14 +1,24 @@
 package org.yzr.poi.ui;
 
 import org.yzr.poi.App;
+import org.yzr.poi.utils.FileChooser;
+import org.yzr.poi.utils.FileUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.dnd.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/3/28.
  */
-public class ImageFrame extends JFrame{
+public class ImageFrame extends JFrame {
     //得到当然屏幕的宽度和高度
     public Toolkit kit = Toolkit.getDefaultToolkit();
     public Dimension screenSize = kit.getScreenSize();
@@ -16,6 +26,8 @@ public class ImageFrame extends JFrame{
     public int screenHeight = screenSize.height;
     //定义一个图像
     Image icon = kit.createImage(ImageFrame.class.getClassLoader().getResource("icon.png"));
+    private DropTarget dropTarget;
+
 
     public ImageFrame(String title) {
         // 设置本地风格

@@ -8,17 +8,19 @@ import java.io.File;
  * Created by Administrator on 2016/3/28.
  */
 public class FileChooser {
+    public static final String[][] fileENames = {
+            { ".xls", "MS-Word 2003 文件(*.xls)" },
+            { ".xlsx", "MS-Excel 2003 文件(*.xlsx)" }
+    };
 
+    public static final String[] fileExtNames = { ".xls", ".xlsx" };
     public static File getFileFromFileChooser() {
         // 创建文件选择器
         JFileChooser fileChooser = new JFileChooser();
         // 设置当前目录
         fileChooser.setCurrentDirectory(new File("."));
         fileChooser.setAcceptAllFileFilterUsed(false);
-        final String[][] fileENames = { { ".java", "JAVA源程序 文件(*.java)" },
-                { ".xls", "MS-Word 2003 文件(*.xls)" },
-                { ".xlsx", "MS-Excel 2003 文件(*.xlsx)" }
-        };
+
 
         // 显示所有文件
         fileChooser.addChoosableFileFilter(new FileFilter() {

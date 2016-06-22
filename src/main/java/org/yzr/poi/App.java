@@ -7,6 +7,10 @@ import org.apache.poi.ss.usermodel.*;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.dnd.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
@@ -24,7 +28,7 @@ import org.yzr.poi.utils.PropertiesManager;
 import javax.swing.*;
 
 /**
- * Hello world!
+ * App
  *
  */
 
@@ -43,6 +47,8 @@ import javax.swing.*;
     private static final String TRUE = "true";
     private static final String FALSE = "false";
 
+    private static boolean processing = false;
+
     // 初始化一个frame,并设置title为"SimpleLocalizable"
     private JFrame frm;
     // 打开文件按钮
@@ -50,11 +56,14 @@ import javax.swing.*;
     private JButton generateBtn;
     private JLabel filePathLabel;
 
+    private  DragAdapter dropTargetAdapter = new DragAdapter();
+
       //下面是一个构造方法
-    public void init() throws Exception
-    {
+    public void init() throws Exception {
         // 初始化一个frame,并设置title为"SimpleLocalizable"
         frm = new ImageFrame("SimpleLocalizable");
+
+        new DropTarget(frm,DnDConstants.ACTION_COPY_OR_MOVE,this.dropTargetAdapter);
         openFileBtn = new ImageButton("images/openFile.png", "images/openFile.png");
         openFileBtn.addActionListener(new ActionListener() {
             @Override
@@ -83,15 +92,22 @@ import javax.swing.*;
         generateBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    readExcel();
-                    String filePath = filePathLabel.getText();
-                    if (filePath != null && filePath.length() > 0) {
-                        FileUtils.showInFinder();
+                synchronized (this) {
+                    try {
+                        if (processing) return;
+                        processing = true;
+                        readExcel();
+                        String filePath = filePathLabel.getText();
+                        if (filePath != null && filePath.length() > 0) {
+                            FileUtils.showInFinder();
+                        }
+                        processing = false;
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                        processing = false;
                     }
-                } catch (Exception e1) {
-                    e1.printStackTrace();
                 }
+
             }
         });
         generateBtn.setLocation(920, 323);
@@ -143,13 +159,28 @@ import javax.swing.*;
         app.init();
     }
 
+    /***
+     * 打开文件选择器
+     */
     public void openFile() {
         File excelFile = FileChooser.getFileFromFileChooser();
         if(excelFile == null) return;
-        this.filePathLabel.setText(excelFile.getAbsolutePath());
+        this.setFilePath(excelFile.getAbsolutePath());
+    }
+
+    /**
+     * 设置文件路径
+     * @param absolutePath
+     */
+    private void setFilePath(String absolutePath) {
+        this.filePathLabel.setText(absolutePath);
         this.filePathLabel.setVisible(true);
     }
 
+    /***
+     * 读取Excel
+     * @throws Exception
+     */
     public void readExcel() throws Exception {
         String filePath = filePathLabel.getText();
         if(filePath == null || filePath.length() < 1) {
@@ -158,7 +189,7 @@ import javax.swing.*;
         Workbook wb = WorkbookFactory.create(new File(filePath));
 
         Locale locales[] = Locale.getAvailableLocales();
-        Set<String > languages = new HashSet<>();
+        Set<String> languages = new HashSet<>();
         for (int i = 0; i < locales.length; i++) {
             Locale locale = locales[i];
             if(locale.getCountry() != null && !locale.getCountry().trim().equals("")) {
@@ -258,6 +289,14 @@ import javax.swing.*;
         }
     }
 
+    /***
+     * 生成本地化文件
+     * @param code
+     * @param language
+     * @param dataModel
+     * @return
+     * @throws Exception
+     */
     public String generate(String code, String language, Map<String, Object> dataModel) throws Exception  {
         Writer out = null;
         try {
@@ -296,4 +335,41 @@ import javax.swing.*;
         }
         return null;
     }
+
+    /***
+     * 拖拽适配器
+     */
+    private class DragAdapter extends DropTargetAdapter {
+
+        @Override
+        public void drop(DropTargetDropEvent dtde) {
+            try {
+                Transferable tf=dtde.getTransferable();
+                if(tf.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
+                    dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
+                    List<File> lt=(List<File>)tf.getTransferData(DataFlavor.javaFileListFlavor);
+                    for (int i = 0; i < lt.size(); i++) {
+                        File file=lt.get(i);
+                        String absolutePath = file.getAbsolutePath();
+
+                        System.out.println(file.getAbsoluteFile());
+                        if (!file.isDirectory()) {
+                            String fileExt = absolutePath.substring(absolutePath.lastIndexOf(".")).toLowerCase();
+                            if (Arrays.asList(FileChooser.fileExtNames).contains(fileExt)) {
+                                setFilePath(absolutePath);
+                                dtde.dropComplete(true);
+                                return;
+                            }
+                        }
+
+                    }
+                    dtde.rejectDrop();
+
+                } else {
+                    dtde.rejectDrop();
+                }
+            } catch(Exception e) { }
+        }
+    }
+
 }
