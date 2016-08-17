@@ -258,22 +258,41 @@ import javax.swing.*;
                             String value = localizable.getValues().get(i);
                             if (languages.contains(value)) {
                                 Map<String, Object> dataModel = new HashMap<>();
+                                Map<String, Object> androidDataModel = new HashMap<>();
+
                                 List<Localizable> currentLocalizables = new ArrayList<>();
+                                List<Localizable> androidCurrentLocalizables = new ArrayList<>();
                                 for(int l = 1; l < list.size(); l++) {
                                     Localizable currentLocalizable = list.get(l);
                                     Localizable dataLocalizable = new Localizable();
+
+                                    Localizable androidDataLocalizable = new Localizable();
                                     if(currentLocalizable.getValues().size() >= i) {
-                                        dataLocalizable.setKey(currentLocalizable.getKey());
-                                        dataLocalizable.putValue(currentLocalizable.getValues().get(i));
+                                        String key = currentLocalizable.getKey();
+                                        String localValue = currentLocalizable.getValues().get(i);
+
+                                        dataLocalizable.setKey(key);
+                                        dataLocalizable.putValue(localValue);
                                         currentLocalizables.add(dataLocalizable);
+
+                                        String androidValue = localValue;
+                                        androidValue = androidValue.replaceAll("&", "&amp;");
+                                        androidValue = androidValue.replaceAll("<", "&lt;");
+                                        androidValue = androidValue.replaceAll(">", "&gt;");
+                                        androidValue = androidValue.replaceAll("'", "&apos;");
+                                        androidValue = androidValue.replaceAll("\"", "&quot;");
+                                        androidDataLocalizable.setKey(key);
+                                        androidDataLocalizable.putValue(androidValue);
+                                        androidCurrentLocalizables.add(androidDataLocalizable);
                                     }
                                 }
                                 dataModel.put("list", currentLocalizables);
+                                androidDataModel.put("list", androidCurrentLocalizables);
                                 if(PropertiesManager.getProperty(IOS_SWITCH).equals(TRUE)){
                                     generate(IOS_KEY, value, dataModel);
                                 }
                                 if(PropertiesManager.getProperty(ANDROID_SWITCH).equals(TRUE)) {
-                                    generate(ANDROID_KEY, value, dataModel);
+                                    generate(ANDROID_KEY, value, androidDataModel);
                                 }
                                 if(PropertiesManager.getProperty(SERVER_SWITCH).equals(TRUE)) {
                                     generate(SERVER_KEY, value, dataModel);
