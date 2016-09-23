@@ -1,19 +1,11 @@
 package org.yzr.poi.ui;
 
+import com.apple.eawt.Application;
 import org.yzr.poi.App;
-import org.yzr.poi.utils.FileChooser;
-import org.yzr.poi.utils.FileUtils;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.*;
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
-import java.util.List;
+
 
 /**
  * Created by Administrator on 2016/3/28.
@@ -32,7 +24,12 @@ public class ImageFrame extends JFrame {
     public ImageFrame(String title) {
         // 设置本地风格
         String lookAndFeel = UIManager.getSystemLookAndFeelClassName();
-        try { UIManager.setLookAndFeel(lookAndFeel);}  catch (Exception e) {}
+        try {
+            UIManager.setLookAndFeel(lookAndFeel);
+            Application application = Application.getApplication();
+            application.setDockIconImage(icon);
+            application.requestUserAttention(true);
+        }  catch (Exception e) {}
         //设置框架的图标,可以在任务栏或alt+tab的时候显示
         this.setIconImage(icon);
         //定义用户关闭这个框架时的响应动作为关闭框架
