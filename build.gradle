@@ -1,0 +1,21 @@
+apply plugin: 'java'
+ 
+repositories {
+    jCenter()
+}
+
+dependencies {
+    compile 'org.apache.poi:poi:3.14'
+    compile 'org.apache.poi:poi-ooxml:3.14'
+    compile 'org.freemarker:freemarker:2.3.23'
+    compile 'com.apple:AppleJavaExtensions:1.4'
+    testCompile 'junit:junit:4.11'
+}
+
+jar {
+    // 打包依赖包
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    manifest {
+        attributes 'Main-Class': 'org.yzr.poi.App'
+    }
+}
