@@ -52,18 +52,27 @@
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
+                    <artifactId>maven-assembly-plugin</artifactId>
                     <configuration>
+                        <descriptorRefs>
+                            <descriptorRef>jar-with-dependencies</descriptorRef>
+                        </descriptorRefs>
                         <archive>
                             <manifest>
                                 <mainClass>org.yzr.poi.App</mainClass>
                                 <addClasspath>true</addClasspath>
-                                <classpathPrefix>lib/</classpathPrefix>
                             </manifest>
                         </archive>
-                        <classesDirectory>
-                        </classesDirectory>
                     </configuration>
+                    <executions>
+                        <execution>
+                            <id>make-assembly</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>single</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </build>
