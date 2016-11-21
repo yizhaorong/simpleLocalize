@@ -1,11 +1,10 @@
-<!-- Localizable created with localio. DO NOT MODIFY. -->
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 <#list list as localizable>
     <#if (localizable.comment > 0) >
-
-        <!--  ${localizable.value} -->
+    <!--${localizable.value} -->
     <#else>
-        <string name="${localizable.key}">${localizable.value}</string>
+    <string name="${localizable.key}">${localizable.value}</string>
     </#if>
 </#list>
 </resources>

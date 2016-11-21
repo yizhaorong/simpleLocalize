@@ -15,6 +15,8 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.*;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.yzr.poi.model.Localizable;
 import org.yzr.poi.ui.ImageButton;
@@ -154,6 +156,19 @@ import javax.swing.*;
 
     public static void main( String[] args ) throws Exception
     {
+        String str = "<figure><img alt=\\\"عبدالكافي\\\" src=\\\"http://ichef-1.bbci.co.uk/news/660/cpsprodpb/A951/production/_92254334_6b0e8688-4738-466e-bb39-903409a8645a.jpg\\\" /><figcaption>عبدالكافي مع ابنته لمار</figcaption></figure><p>كانت الهدنة التي أعلنت عنها روسيا، بوقف القصف عل<img alt=\\\"عبدالكافي\\\" src=\\\"http://ichef-1.bbci.co.uk/news/660/cpsprodpb/A951/production/_92254334_6b0e8688-4738-466e-bb39-903409a8645a.jpg\\\" /><figcaption>عبدالكافي مع ابنته لمار</figcaption></figure>123321321321<img alt=\\\"عبدالكافي\\\" src=\\\"http://ichef-1.bbci.co.uk/news/660/cpsprodpb/A951/production/_92254334_6b0e8688-4738-466e-bb39-903409a8645a.jpg\\\" ></ img>";
+        String regEx = "<(\\s*)(?i:img)\\s(((?!<).)+)((/>)|(</(\\s*)(?i:img)>))";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(str);
+        int count = 0;
+        String s = str;
+        while (m.find()) {
+            s = s.replaceFirst(regEx, "<!--IMAGE#"+count+"-->");
+            count = count + 1;
+        }
+        System.out.println("共有 " + count + "个 ");
+
+        System.out.print(s);
         App app = new App();
         app.init();
     }
@@ -277,9 +292,9 @@ import javax.swing.*;
                                         String androidValue = localValue;
                                         androidValue = androidValue.replaceAll("&", "&amp;");
                                         androidValue = androidValue.replaceAll("<", "&lt;");
-                                        androidValue = androidValue.replaceAll(">", "&gt;");
-                                        androidValue = androidValue.replaceAll("'", "&apos;");
-                                        androidValue = androidValue.replaceAll("\"", "&quot;");
+//                                        androidValue = androidValue.replaceAll(">", "&gt;");
+                                        androidValue = androidValue.replaceAll("'", "\\\\'");
+//                                        androidValue = androidValue.replaceAll("\"", "&quot;");
                                         androidDataLocalizable.setKey(key);
                                         androidDataLocalizable.putValue(androidValue);
                                         androidCurrentLocalizables.add(androidDataLocalizable);
