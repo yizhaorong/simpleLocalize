@@ -154,21 +154,7 @@ import javax.swing.*;
         frm.setVisible(true);
     }
 
-    public static void main( String[] args ) throws Exception
-    {
-        String str = "<figure><img alt=\\\"عبدالكافي\\\" src=\\\"http://ichef-1.bbci.co.uk/news/660/cpsprodpb/A951/production/_92254334_6b0e8688-4738-466e-bb39-903409a8645a.jpg\\\" /><figcaption>عبدالكافي مع ابنته لمار</figcaption></figure><p>كانت الهدنة التي أعلنت عنها روسيا، بوقف القصف عل<img alt=\\\"عبدالكافي\\\" src=\\\"http://ichef-1.bbci.co.uk/news/660/cpsprodpb/A951/production/_92254334_6b0e8688-4738-466e-bb39-903409a8645a.jpg\\\" /><figcaption>عبدالكافي مع ابنته لمار</figcaption></figure>123321321321<img alt=\\\"عبدالكافي\\\" src=\\\"http://ichef-1.bbci.co.uk/news/660/cpsprodpb/A951/production/_92254334_6b0e8688-4738-466e-bb39-903409a8645a.jpg\\\" ></ img>";
-        String regEx = "<(\\s*)(?i:img)\\s(((?!<).)+)((/>)|(</(\\s*)(?i:img)>))";
-        Pattern p = Pattern.compile(regEx);
-        Matcher m = p.matcher(str);
-        int count = 0;
-        String s = str;
-        while (m.find()) {
-            s = s.replaceFirst(regEx, "<!--IMAGE#"+count+"-->");
-            count = count + 1;
-        }
-        System.out.println("共有 " + count + "个 ");
-
-        System.out.print(s);
+    public static void main( String[] args ) throws Exception {
         App app = new App();
         app.init();
     }
@@ -282,8 +268,8 @@ import javax.swing.*;
 
                                     Localizable androidDataLocalizable = new Localizable();
                                     if(currentLocalizable.getValues().size() >= i) {
-                                        String key = currentLocalizable.getKey();
-                                        String localValue = currentLocalizable.getValues().get(i);
+                                        String key = currentLocalizable.getKey().trim();
+                                        String localValue = currentLocalizable.getValues().get(i).trim();
 
                                         dataLocalizable.setKey(key);
                                         dataLocalizable.putValue(localValue);
