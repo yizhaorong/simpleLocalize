@@ -197,7 +197,7 @@ import javax.swing.*;
             }
             languages.add(locale.getLanguage());
         }
-
+        languages.add("cn");
         File file = new File(PropertiesManager.getProperty("basePath"));
         if(file.exists()) {
             FileUtils.deleteDir(file);
@@ -268,22 +268,24 @@ import javax.swing.*;
 
                                     Localizable androidDataLocalizable = new Localizable();
                                     if(currentLocalizable.getValues().size() >= i) {
-                                        String key = currentLocalizable.getKey().trim();
-                                        String localValue = currentLocalizable.getValues().get(i).trim();
+                                        try {
+                                            String key = currentLocalizable.getKey().trim();
+                                            String localValue = currentLocalizable.getValues().get(i).trim();
 
-                                        dataLocalizable.setKey(key);
-                                        dataLocalizable.putValue(localValue);
-                                        currentLocalizables.add(dataLocalizable);
+                                            dataLocalizable.setKey(key);
+                                            dataLocalizable.putValue(localValue);
+                                            currentLocalizables.add(dataLocalizable);
 
-                                        String androidValue = localValue;
-                                        androidValue = androidValue.replaceAll("&", "&amp;");
-                                        androidValue = androidValue.replaceAll("<", "&lt;");
+                                            String androidValue = localValue;
+                                            androidValue = androidValue.replaceAll("&", "&amp;");
+                                            androidValue = androidValue.replaceAll("<", "&lt;");
 //                                        androidValue = androidValue.replaceAll(">", "&gt;");
-                                        androidValue = androidValue.replaceAll("'", "\\\\'");
+                                            androidValue = androidValue.replaceAll("'", "\\\\'");
 //                                        androidValue = androidValue.replaceAll("\"", "&quot;");
-                                        androidDataLocalizable.setKey(key);
-                                        androidDataLocalizable.putValue(androidValue);
-                                        androidCurrentLocalizables.add(androidDataLocalizable);
+                                            androidDataLocalizable.setKey(key);
+                                            androidDataLocalizable.putValue(androidValue);
+                                            androidCurrentLocalizables.add(androidDataLocalizable);
+                                        } catch (Exception e){}
                                     }
                                 }
                                 dataModel.put("list", currentLocalizables);

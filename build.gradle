@@ -1,7 +1,7 @@
 apply plugin: 'java'
- 
+
 repositories {
-    jCenter()
+    jcenter()
 }
 
 dependencies {
@@ -17,5 +17,5 @@ jar {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     manifest {
         attributes 'Main-Class': 'org.yzr.poi.App'
-    }ç
+    }
 }
