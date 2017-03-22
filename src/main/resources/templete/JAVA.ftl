@@ -1,6 +1,3 @@
-# Localizable created with localio. DO NOT MODIFY.
-#
-
 <#list list as localizable>
     <#if (localizable.comment > 0) >
 
