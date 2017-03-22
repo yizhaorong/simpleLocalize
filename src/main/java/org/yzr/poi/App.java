@@ -34,6 +34,8 @@ import javax.swing.*;
  */
 
     public class App {
+
+    private static final String LANGUAGE_EX = "([a-zA-Z])+[_]?([a-zA-Z])*";
     private static final String START_KEY = "[key]";
     private static final String END_KEY = "[end]";
 
@@ -188,16 +190,6 @@ import javax.swing.*;
         }
         Workbook wb = WorkbookFactory.create(new File(filePath));
 
-        Locale locales[] = Locale.getAvailableLocales();
-        Set<String> languages = new HashSet<>();
-        for (int i = 0; i < locales.length; i++) {
-            Locale locale = locales[i];
-            if(locale.getCountry() != null && !locale.getCountry().trim().equals("")) {
-                languages.add(locale.getLanguage() +"_"+ locale.getCountry());
-            }
-            languages.add(locale.getLanguage());
-        }
-        languages.add("cn");
         File file = new File(PropertiesManager.getProperty("basePath"));
         if(file.exists()) {
             FileUtils.deleteDir(file);
@@ -256,7 +248,7 @@ import javax.swing.*;
                     if (valueLength > 0) {
                         for (int i = 0; i < valueLength; i++) {
                             String value = localizable.getValues().get(i);
-                            if (languages.contains(value)) {
+                            if (isLanguageKey(value)) {
                                 Map<String, Object> dataModel = new HashMap<>();
                                 Map<String, Object> androidDataModel = new HashMap<>();
 
@@ -358,6 +350,17 @@ import javax.swing.*;
     }
 
     /***
+     * 是否是语言Key
+     * @param key
+     * @return true or false
+     */
+    private boolean isLanguageKey(String key) {
+        Pattern pattern = Pattern.compile(LANGUAGE_EX);
+        Matcher matcher = pattern.matcher(key);
+        return matcher.matches();
+    }
+
+    /***
      * 拖拽适配器
      */
     private class DragAdapter extends DropTargetAdapter {
@@ -365,12 +368,12 @@ import javax.swing.*;
         @Override
         public void drop(DropTargetDropEvent dtde) {
             try {
-                Transferable tf=dtde.getTransferable();
-                if(tf.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
+                Transferable tf = dtde.getTransferable();
+                if (tf.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
                     dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
-                    List<File> lt=(List<File>)tf.getTransferData(DataFlavor.javaFileListFlavor);
+                    List<File> lt = (List<File>) tf.getTransferData(DataFlavor.javaFileListFlavor);
                     for (int i = 0; i < lt.size(); i++) {
-                        File file=lt.get(i);
+                        File file = lt.get(i);
                         String absolutePath = file.getAbsolutePath();
 
                         System.out.println(file.getAbsoluteFile());
@@ -389,7 +392,8 @@ import javax.swing.*;
                 } else {
                     dtde.rejectDrop();
                 }
-            } catch(Exception e) { }
+            } catch (Exception e) {
+            }
         }
     }
 
