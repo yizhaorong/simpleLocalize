@@ -46,6 +46,9 @@ import javax.swing.*;
     private static final String IOS_KEY = "iOS";
     private static final String ANDROID_KEY = "Android";
     private static final String SERVER_KEY = "JAVA";
+
+    private static final String IGNORE_ENGLISH_SUFFIX = "ignoreEnglishSuffix";
+    private static final String IGNORE_CHINESE = "ignoreChinese";
     
     private static final String TRUE = "true";
     private static final String FALSE = "false";
@@ -263,7 +266,7 @@ import javax.swing.*;
                                         try {
                                             String key = currentLocalizable.getKey().trim();
                                             String localValue = currentLocalizable.getValues().get(i).trim();
-
+                                            localValue = localValue.replaceAll("\"", "\\\\\"");
                                             dataLocalizable.setKey(key);
                                             dataLocalizable.putValue(localValue);
                                             currentLocalizables.add(dataLocalizable);
@@ -273,7 +276,7 @@ import javax.swing.*;
                                             androidValue = androidValue.replaceAll("<", "&lt;");
 //                                        androidValue = androidValue.replaceAll(">", "&gt;");
                                             androidValue = androidValue.replaceAll("'", "\\\\'");
-                                            androidValue = androidValue.replaceAll("\"", "\\\\\"");
+//                                            androidValue = androidValue.replaceAll("\"", "\\\\\"");
                                             androidDataLocalizable.setKey(key);
                                             androidDataLocalizable.putValue(androidValue);
                                             androidCurrentLocalizables.add(androidDataLocalizable);
@@ -311,6 +314,11 @@ import javax.swing.*;
      * @throws Exception
      */
     public String generate(String code, String language, Map<String, Object> dataModel) throws Exception  {
+        if (language.equals("cn")) {
+            Boolean ignoreChinese = Boolean.valueOf(PropertiesManager.getProperty(IGNORE_CHINESE));
+            if (ignoreChinese) return null;
+        }
+
         Writer out = null;
         try {
             out = new StringWriter();
@@ -319,7 +327,21 @@ import javax.swing.*;
             if(code.equalsIgnoreCase(IOS_KEY)) {
                 filePath = basePath +language+ ".lproj" + File.separator + PropertiesManager.getProperty(code+"FileName");
             } else if(code.equalsIgnoreCase(ANDROID_KEY)) {
-                filePath = basePath +"values-" + language + File.separator + PropertiesManager.getProperty(code+"FileName");
+                if (language.equals("en")) {
+                    Boolean ignoreEnglishSuffix = Boolean.valueOf(PropertiesManager.getProperty(IGNORE_ENGLISH_SUFFIX));
+                    if (ignoreEnglishSuffix) {
+                        language = "";
+                    } else {
+                        language = "-en";
+                    }
+                    filePath = basePath +"values" + language + File.separator + PropertiesManager.getProperty(code+"FileName");
+                } else {
+                    if (language.equals("id")) {
+                        language = "in";
+                    }
+                    filePath = basePath +"values-" + language + File.separator + PropertiesManager.getProperty(code+"FileName");
+                }
+
             } else if (code.equalsIgnoreCase(SERVER_KEY)) {
                 filePath = basePath + PropertiesManager.getProperty(code+"FileName") + language + ".properties";
             }
