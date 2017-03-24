@@ -96,17 +96,17 @@ import javax.swing.*;
             @Override
             public void actionPerformed(ActionEvent e) {
                 synchronized (this) {
+                    if (processing) return;
                     try {
-                        if (processing) return;
                         processing = true;
                         readExcel();
                         String filePath = filePathLabel.getText();
                         if (filePath != null && filePath.length() > 0) {
                             FileUtils.showInFinder();
                         }
-                        processing = false;
                     } catch (Exception e1) {
                         e1.printStackTrace();
+                    } finally {
                         processing = false;
                     }
                 }
@@ -273,7 +273,7 @@ import javax.swing.*;
                                             androidValue = androidValue.replaceAll("<", "&lt;");
 //                                        androidValue = androidValue.replaceAll(">", "&gt;");
                                             androidValue = androidValue.replaceAll("'", "\\\\'");
-//                                        androidValue = androidValue.replaceAll("\"", "&quot;");
+                                            androidValue = androidValue.replaceAll("\"", "\\\\\"");
                                             androidDataLocalizable.setKey(key);
                                             androidDataLocalizable.putValue(androidValue);
                                             androidCurrentLocalizables.add(androidDataLocalizable);
