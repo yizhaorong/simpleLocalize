@@ -3,11 +3,23 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.yzr.poi</groupId>
-  <artifactId>simpleLocalize</artifactId>
+  <artifactId>localize</artifactId>
   <version>1.0</version>
-  <packaging>jar</packaging>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <packaging>jar</packaging>
 
-  <name>simpleLocalize</name>
+  <name>EasyLocalize</name>
   <url>http://maven.apache.org</url>
 
   <properties>
@@ -46,20 +58,20 @@
 
   <profiles>
     <profile>
-      <id>code-generator</id>
+      <id>localize</id>
         <build>
             <finalName>${project.name}</finalName>
             <plugins>
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
+                    <version>3.0.0</version>
                     <configuration>
                         <descriptorRefs>
                             <descriptorRef>jar-with-dependencies</descriptorRef>
                         </descriptorRefs>
                         <archive>
                             <manifest>
-                                <mainClass>org.yzr.poi.App</mainClass>
+                                <mainClass>org.yzr.poi.main.EasyLocalize</mainClass>
                                 <addClasspath>true</addClasspath>
                             </manifest>
                         </archive>
