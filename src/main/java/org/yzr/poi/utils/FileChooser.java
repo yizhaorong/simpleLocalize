@@ -1,61 +1,29 @@
 package org.yzr.poi.utils;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
+import com.sun.javafx.stage.StageHelper;
+
+import java.awt.*;
 import java.io.File;
+import java.io.FileFilter;
 
 /**
  * Created by Administrator on 2016/3/28.
  */
 public class FileChooser {
-    public static final String[][] fileENames = {
-            { ".xls", "MS-Word 2003 文件(*.xls)" },
-            { ".xlsx", "MS-Excel 2003 文件(*.xlsx)" }
-    };
-
     public static final String[] fileExtNames = { ".xls", ".xlsx" };
+
     public static File getFileFromFileChooser() {
         // 创建文件选择器
-        JFileChooser fileChooser = new JFileChooser();
+        final javafx.stage.FileChooser fileChooser = new javafx.stage.FileChooser();
         // 设置当前目录
-        fileChooser.setCurrentDirectory(new File("."));
-        fileChooser.setAcceptAllFileFilterUsed(false);
-
-
-        // 显示所有文件
-        fileChooser.addChoosableFileFilter(new FileFilter() {
-            public boolean accept(File file) {
-                return true;
-            }
-            public String getDescription() {
-                return "所有文件(*.*)";
-            }
-        });
-
-        // 循环添加需要显示的文件
-        for (final String[] fileEName : fileENames) {
-
-            fileChooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
-
-                public boolean accept(File file) {
-
-                    if (file.getName().endsWith(fileEName[0]) || file.isDirectory()) {
-
-                        return true;
-                    }
-
-                    return false;
-                }
-
-                public String getDescription() {
-
-                    return fileEName[1];
-                }
-
-            });
-        }
-
-        fileChooser.showDialog(null, null);
-        return fileChooser.getSelectedFile();
+        fileChooser.setTitle("View Pictures");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home"))
+        );
+        fileChooser.getExtensionFilters().addAll(
+                new javafx.stage.FileChooser.ExtensionFilter("所有Excel", "*.xls", "*.xlsx"),
+                new javafx.stage.FileChooser.ExtensionFilter("MS-Word 2003 文件(*.xls)", "*.xls"),
+                new javafx.stage.FileChooser.ExtensionFilter("MS-Excel 2007 文件(*.xlsx)", "*.xlsx")
+        );
+        return fileChooser.showOpenDialog(StageHelper.getStages().get(0));
     }
 }

@@ -1,7 +1,5 @@
 package org.yzr.poi.utils;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
 import java.io.File;
 import java.io.IOException;
 
@@ -30,6 +28,11 @@ public class FileUtils {
         }
         // 目录此时为空，可以删除
         return dir.delete();
+    }
+
+    public static boolean fileExist(String filePath) {
+        File file = new File(filePath);
+        return file.exists();
     }
 
     public static void showInFinder() {
