@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.yzr.poi.view.Button?>
+
+<Pane prefHeight="305" prefWidth="405" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.yzr.poi.controller.SettingController">
+    <VBox fx:id="box" prefHeight="300" prefWidth="400" style="-fx-background-color: #008FEB; -fx-background-radius: 5px;">
+        <children>
+            <Pane prefHeight="35.0" prefWidth="400">
+                <Label fx:id="label" layoutX="10.0" layoutY="8.0" text="设置" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font></Label>
+                <Button layoutX="360.0" layoutY="5.0" onMouseClicked="#close" style="-fx-background-color: transparent">
+                    <graphic>
+                        <ImageView>
+                            <Image url="@../images/close_normal.png" />
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </Pane>
+            <Pane layoutY="35" prefHeight="265.0" prefWidth="400.0" style="-fx-background-color: white">
+                <CheckBox fx:id="ignoreChinese" layoutX="10" layoutY="10" text="忽略中文文案" />
+                <CheckBox fx:id="ignoreAndroidEnglish" layoutX="10" layoutY="35" text="忽略Android英文文件夹后缀" />
+                <CheckBox fx:id="useDefault" layoutX="10" layoutY="60.0" text="缺失文案填充默认值" />
+                <!--<Label layoutX="10" layoutY="90.0" prefWidth="60" text="默认文案:" />-->
+                <!--<TextField fx:id="defaultValue" layoutX="70.0" layoutY="85.0" />-->
+            </Pane>
+        </children>
+        <effect>
+            <DropShadow offsetX="5.0" offsetY="5.0" radius="10.25" width="22.0" />
+        </effect>
+    </VBox>
+
+</Pane>
