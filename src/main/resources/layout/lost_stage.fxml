@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import org.yzr.poi.view.Button?>
+
+<Pane fx:id="mainPane" prefHeight="300" prefWidth="400" style="-fx-background-color: #008FEB; -fx-background-radius: 5px;" xmlns="http://javafx.com/javafx/8.0.112-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.yzr.poi.controller.LostController">
+    <children>
+        <Pane prefHeight="35.0" prefWidth="400">
+            <Label fx:id="label" layoutX="10.0" layoutY="8.0" text="缺失文案" textFill="WHITE">
+                <font>
+                    <Font name="System Bold" size="14.0" />
+                </font></Label>
+            <Button fx:id="closeButton" layoutX="360.0" layoutY="5.0" onMouseClicked="#close" style="-fx-background-color: transparent">
+                <graphic>
+                    <ImageView>
+                        <Image url="@../images/close_normal.png" />
+                    </ImageView>
+                </graphic>
+            </Button>
+        </Pane>
+        <ListView fx:id="list" layoutY="35.0" prefWidth="400" prefHeight="265">
+        </ListView>
+    </children>
+
+</Pane>

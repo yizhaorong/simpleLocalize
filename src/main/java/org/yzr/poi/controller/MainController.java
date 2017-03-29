@@ -3,6 +3,8 @@ package org.yzr.poi.controller;
 import com.sun.javafx.stage.StageHelper;
 import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -61,6 +63,9 @@ public class MainController {
 
     @FXML private Button closeButton;
 
+    @FXML private Button showLostButton;
+
+    private ObservableList<String> lostList = FXCollections.observableArrayList();
 
     public void init() {
 
@@ -70,14 +75,14 @@ public class MainController {
         mainPane.setOnDragDropped(new DragDroppedEvent(filePathLabel));
         setShadow(mainPane);
 
-        settingButton.setImage(this.getClass().getResource("/images/setting_normal.png").getPath(), ButtonState.Normal);
-        settingButton.setImage(this.getClass().getResource("/images/setting_normal_h.png").getPath(), ButtonState.Highlight);
+        settingButton.setImage("/images/setting_normal.png", ButtonState.Normal);
+        settingButton.setImage("/images/setting_normal_h.png", ButtonState.Highlight);
         settingButton.setMouseClicked(event -> setting());
 
-        minButton.setImage(this.getClass().getResource("/images/min_normal.png").getPath(), ButtonState.Normal);
+        minButton.setImage("/images/min_normal.png", ButtonState.Normal);
         minButton.setMouseClicked(event -> min());
 
-        closeButton.setImage(this.getClass().getResource("/images/close_normal.png").getPath(), ButtonState.Normal);
+        closeButton.setImage("/images/close_normal.png", ButtonState.Normal);
         closeButton.setMouseClicked(event -> close());
 
         openFileButton.setOnAction(event -> {
@@ -106,9 +111,9 @@ public class MainController {
             scale.setCycleCount(1);
             scale.play();
         });
-
-        androidButton.setImage(this.getClass().getResource("/images/Android_normal.png").getPath(), ButtonState.Normal);
-        androidButton.setImage(this.getClass().getResource("/images/Android_disable.png").getPath(), ButtonState.Selected);
+        
+        androidButton.setImage("/images/Android_normal.png", ButtonState.Normal);
+        androidButton.setImage("/images/Android_disable.png", ButtonState.Selected);
         androidButton.setMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -117,8 +122,8 @@ public class MainController {
         });
         androidButton.setSelected(!new Boolean(PropertiesManager.getProperty(Constant.ANDROID_SWITCH)));
 
-        iOSButton.setImage(this.getClass().getResource("/images/iOS_normal.png").getPath(), ButtonState.Normal);
-        iOSButton.setImage(this.getClass().getResource("/images/iOS_disable.png").getPath(), ButtonState.Selected);
+        iOSButton.setImage("/images/iOS_normal.png", ButtonState.Normal);
+        iOSButton.setImage("/images/iOS_disable.png", ButtonState.Selected);
         iOSButton.setMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -127,8 +132,8 @@ public class MainController {
         });
         iOSButton.setSelected(!new Boolean(PropertiesManager.getProperty(Constant.IOS_SWITCH)));
 
-        serverButton.setImage(this.getClass().getResource("/images/server_normal.png").getPath(), ButtonState.Normal);
-        serverButton.setImage(this.getClass().getResource("/images/server_disable.png").getPath(), ButtonState.Selected);
+        serverButton.setImage("/images/server_normal.png", ButtonState.Normal);
+        serverButton.setImage("/images/server_disable.png", ButtonState.Selected);
         serverButton.setMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -137,7 +142,7 @@ public class MainController {
         });
         serverButton.setSelected(!new Boolean(PropertiesManager.getProperty(Constant.SERVER_SWITCH)));
 
-        generateButton.setImage(this.getClass().getResource("/images/generate.png").getPath(), ButtonState.Normal);
+        generateButton.setImage("/images/generate.png", ButtonState.Normal);
         generateButton.setMouseClicked(event -> {
             System.out.println("生成");
 
@@ -150,18 +155,22 @@ public class MainController {
                             ExcelUtils.generate(copyWriteContainer);
                         }
 
-                        System.out.println("共" + copyWriteContainers.size() + "种语言");
-
+                        lostList.clear();
                         for (CopyWriteContainer copyWriteContainer: copyWriteContainers) {
                             int lostCount = copyWriteContainer.getLostCopyWrites().size();
                             if (lostCount > 0) {
-                                System.out.println("=======================================");
-                                System.out.println(copyWriteContainer.getLanguage() + "缺失" + lostCount + "个文案");
+                                lostList.add(copyWriteContainer.getLanguage() + "缺失" + lostCount + "个文案");
                                 for (String key : copyWriteContainer.getLostCopyWrites()) {
                                     System.out.println(key);
+                                    lostList.add(key);
                                 }
-                                System.out.println("=======================================");
                             }
+                        }
+
+                        if (lostList.size() > 0) {
+                            showLostButton.setVisible(true);
+                        } else {
+                            showLostButton.setVisible(false);
                         }
 
                         if (copyWriteContainers.size() > 0) {
@@ -233,6 +242,8 @@ public class MainController {
     }
 
     protected void setting() {
+        settingButton.setSelected(false);
+        if (SettingController.getSettingStage() != null) return;
         try {
             Stage settingStage = new Stage();
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/layout/setting_stage.fxml"));
@@ -249,8 +260,30 @@ public class MainController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    protected void showLostStage() {
+        if (LostController.getLostStage() != null) return;
+        try {
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/layout/lost_stage.fxml"));
+            Parent root = loader.load();
+            LostController lostController = loader.getController();
+            lostController.init(lostList);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setTitle("Lost");
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/images/setting_icon.png")));
+
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
+
 
     private void setShadow(Node node) {
         DropShadow ds = new DropShadow();

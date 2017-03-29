@@ -22,6 +22,7 @@ public class Constant {
 
     public static final String IGNORE_ENGLISH_SUFFIX = "ignoreEnglishSuffix";
     public static final String IGNORE_CHINESE = "ignoreChinese";
+    public static final String FIX_ID_LANGUAGE = "fixIdLanguage";
 
     public static final String IOS_SWITCH = "iOSOpen";
     public static final String ANDROID_SWITCH = "AndroidOpen";

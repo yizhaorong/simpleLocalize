@@ -205,7 +205,8 @@ public class ExcelUtils {
                     }
                     filePath = basePath +"values" + language + File.separator + PropertiesManager.getProperty(code+"FileName");
                 } else {
-                    if (language.equals("id")) {
+                    Boolean fixIdLanguage = Boolean.valueOf(PropertiesManager.getProperty(Constant.FIX_ID_LANGUAGE));
+                    if (language.equals("id") && fixIdLanguage) {
                         language = "in";
                     }
                     filePath = basePath +"values-" + language + File.separator + PropertiesManager.getProperty(code+"FileName");

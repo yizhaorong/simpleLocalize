@@ -125,7 +125,7 @@ public class Button extends javafx.scene.control.Button {
     private Image loadImage(String imageName) {
         Image image = null;
         try {
-            image = new Image(new FileInputStream(new File(imageName)));
+            image = new Image(getClass().getResourceAsStream(imageName));
         } catch (Exception e) {
 
         }

@@ -1,29 +1,20 @@
 package org.yzr.poi.controller;
 
 import com.sun.javafx.stage.StageHelper;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import org.yzr.poi.model.ButtonState;
 import org.yzr.poi.utils.Constant;
 import org.yzr.poi.utils.PropertiesManager;
+import org.yzr.poi.view.*;
 
 /**
  * Created by yizhaorong on 2017/3/26.
@@ -35,11 +26,13 @@ public class SettingController extends VBox {
 
     @FXML private VBox box;
 
-    @FXML private Label label;
+    @FXML private org.yzr.poi.view.Button closeButton;
 
     @FXML private CheckBox ignoreChinese;
 
     @FXML private CheckBox ignoreAndroidEnglish;
+
+    @FXML private CheckBox fixAndroidIdLanguage;
 
     @FXML private CheckBox useDefault;
 
@@ -66,6 +59,8 @@ public class SettingController extends VBox {
 
         setShadow(box);
 
+        closeButton.setImage("/images/close_normal.png", ButtonState.Normal);
+
         ignoreChinese.setOnAction(event -> {
             PropertiesManager.setProperty(Constant.IGNORE_CHINESE, ignoreChinese.isSelected() ? Constant.TRUE : Constant.FALSE);
         });
@@ -75,6 +70,11 @@ public class SettingController extends VBox {
             PropertiesManager.setProperty(Constant.IGNORE_ENGLISH_SUFFIX, ignoreAndroidEnglish.isSelected() ? Constant.TRUE : Constant.FALSE);
         });
         ignoreAndroidEnglish.setSelected(new Boolean(PropertiesManager.getProperty(Constant.IGNORE_ENGLISH_SUFFIX)));
+
+        fixAndroidIdLanguage.setOnAction(event -> {
+            PropertiesManager.setProperty(Constant.FIX_ID_LANGUAGE, fixAndroidIdLanguage.isSelected() ? Constant.TRUE : Constant.FALSE);
+        });
+        fixAndroidIdLanguage.setSelected(new Boolean(PropertiesManager.getProperty(Constant.FIX_ID_LANGUAGE)));
 
         useDefault.setOnAction(event -> {
             PropertiesManager.setProperty(Constant.USE_DEFAULT_VALUE, useDefault.isSelected() ? Constant.TRUE : Constant.FALSE);
@@ -104,7 +104,7 @@ public class SettingController extends VBox {
         Event.fireEvent(getSettingStage(), new WindowEvent(getSettingStage(), WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
-    private Stage getSettingStage() {
+    public static Stage getSettingStage() {
         for (Stage stage : StageHelper.getStages()) {
             if (stage.getTitle().equals("设置")) {
                 return stage;

@@ -5,103 +5,107 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 <?import org.yzr.poi.view.Button?>
 
-<FlowPane prefHeight="770" prefWidth="1220" style="-fx-background-color: transparent" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.yzr.poi.controller.MainController">
-    <FlowPane fx:id="mainPane" prefHeight="764" prefWidth="1215" style="-fx-background-color: rgb(98,172,25); -fx-background-radius: 5px;">
-        <children>
-            <Pane>
-                <!--背景-->
-                <!--<ImageView>-->
-                <!--<Image backgroundLoading="true" requestedHeight="764" requestedWidth="1215" url="@../images/window_bg.png" />-->
-                <!--</ImageView>-->
-                <Pane prefHeight="164" prefWidth="1215">
-                    <ImageView layoutX="30.0" layoutY="20.0" scaleX="0.8" scaleY="0.8">
-                        <Image backgroundLoading="true" url="@../images/rocket.png" />
-                    </ImageView>
+<FlowPane fx:id="mainPane" prefHeight="764" prefWidth="1215" style="-fx-background-color: rgb(98,172,25); -fx-background-radius: 5px;" xmlns="http://javafx.com/javafx/8.0.112-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.yzr.poi.controller.MainController">
+    <children>
+        <Pane>
+            <!--背景-->
+            <!--<ImageView>-->
+            <!--<Image backgroundLoading="true" requestedHeight="764" requestedWidth="1215" url="@../images/window_bg.png" />-->
+            <!--</ImageView>-->
+            <Pane prefHeight="164" prefWidth="1215">
+                <ImageView layoutX="30.0" layoutY="20.0" scaleX="0.8" scaleY="0.8">
+                    <Image backgroundLoading="true" url="@../images/rocket.png" />
+                </ImageView>
 
-                    <Label layoutX="185.0" layoutY="30.0" maxWidth="850" style="-fx-font-size: 40px;" text="一键生成，让工作更高效" textFill="WHITE" />
+                <Label layoutX="185.0" layoutY="30.0" maxWidth="850" style="-fx-font-size: 40px;" text="一键生成，让工作更高效" textFill="WHITE" />
 
-                    <Label fx:id="filePathLabel" layoutX="185.0" layoutY="90.0" maxWidth="850" style="-fx-font-size: 40px;" text="http://blog.csdn.net/my_yang/article/details/9105593" textFill="WHITE" />
+                <Label fx:id="filePathLabel" layoutX="185.0" layoutY="90.0" maxWidth="850" style="-fx-font-size: 40px;" text="http://blog.csdn.net/my_yang/article/details/9105593" textFill="WHITE" />
 
-                    <Button fx:id="openFileButton" layoutX="1050.0" layoutY="50.0">
-                        <graphic>
-                            <ImageView>
-                                <Image url="@../images/openFile.png" />
-                            </ImageView>
-                        </graphic>
-                    </Button>
-                </Pane>
-
-
-                <!--操作按钮-->
-                <Pane layoutY="164.0" prefHeight="600.0" prefWidth="1215" style="-fx-background-color: white">
-                    <Button fx:id="iOSButton" alignment="CENTER" layoutX="60" layoutY="150.0" style="-fx-background-color: transparent;">
-                        <graphic>
-                            <ImageView>
-                                <Image url="@../images/iOS_normal.png" />
-                            </ImageView>
-                        </graphic>
-                    </Button>
-
-                    <Button fx:id="androidButton" alignment="CENTER" layoutX="350" layoutY="150.0" style="-fx-background-color: transparent;">
-                        <graphic>
-                            <ImageView>
-                                <Image url="@../images/Android_normal.png" />
-                            </ImageView>
-                        </graphic>
-                    </Button>
-
-                    <Button fx:id="serverButton" alignment="CENTER" layoutX="640" layoutY="150.0" style="-fx-background-color: transparent;">
-                        <graphic>
-                            <ImageView>
-                                <Image url="@../images/server_normal.png" />
-                            </ImageView>
-                        </graphic>
-                    </Button>
-
-                    <Button fx:id="generateButton" alignment="CENTER" layoutX="920" layoutY="160.0" style="-fx-background-color: transparent;">
-                        <graphic>
-                            <ImageView>
-                                <Image url="@../images/generate.png" />
-                            </ImageView>
-                        </graphic>
-                    </Button>
-                </Pane>
-
-                <!--处理中-->
-                <Pane fx:id="maskView" prefHeight="764" prefWidth="1215" style="-fx-background-color:rgba(0, 0, 0, .5);" visible="false">
-                    <ImageView fx:id="loading">
-                        <Image url="@../images/loading.gif" />
-                    </ImageView>
-                </Pane>
-
-                <!--关闭等操作-->
-                <Button fx:id="settingButton" layoutX="1115.0" layoutY="5.0" style="-fx-background-color: transparent">
+                <Button fx:id="openFileButton" layoutX="1050.0" layoutY="50.0">
                     <graphic>
                         <ImageView>
-                            <Image url="@../images/setting_normal.png" />
-                        </ImageView>
-                    </graphic>
-                </Button>
-
-                <Button fx:id="minButton" layoutX="1145.0" layoutY="5.0" style="-fx-background-color: transparent">
-                    <graphic>
-                        <ImageView>
-                            <Image url="@../images/min_normal.png" />
-                        </ImageView>
-                    </graphic>
-                </Button>
-
-                <Button fx:id="closeButton" layoutX="1175.0" layoutY="5.0" style="-fx-background-color: transparent">
-                    <graphic>
-                        <ImageView>
-                            <Image url="@../images/close_normal.png" />
+                            <Image url="@../images/openFile.png" />
                         </ImageView>
                     </graphic>
                 </Button>
             </Pane>
-        </children>
-    </FlowPane>
+
+
+            <!--操作按钮-->
+            <Pane layoutY="164.0" prefHeight="600.0" prefWidth="1215" style="-fx-background-color: white">
+                <Button fx:id="iOSButton" alignment="CENTER" layoutX="60" layoutY="150.0" style="-fx-background-color: transparent;">
+                    <graphic>
+                        <ImageView>
+                            <Image url="@../images/iOS_normal.png" />
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button fx:id="androidButton" alignment="CENTER" layoutX="350" layoutY="150.0" style="-fx-background-color: transparent;">
+                    <graphic>
+                        <ImageView>
+                            <Image url="@../images/Android_normal.png" />
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button fx:id="serverButton" alignment="CENTER" layoutX="640" layoutY="150.0" style="-fx-background-color: transparent;">
+                    <graphic>
+                        <ImageView>
+                            <Image url="@../images/server_normal.png" />
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button fx:id="generateButton" alignment="CENTER" layoutX="920" layoutY="160.0" style="-fx-background-color: transparent;">
+                    <graphic>
+                        <ImageView>
+                            <Image url="@../images/generate.png" />
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button fx:id="showLostButton" layoutX="1100.0" layoutY="560.0" text="查看缺失文案" onAction="#showLostStage" textFill="WHITE" style="-fx-background-color: #008FEB;" visible="false">
+              <font>
+                 <Font name="System Bold" size="14.0" />
+              </font></Button>
+            </Pane>
+
+            <!--处理中-->
+            <Pane fx:id="maskView" prefHeight="764" prefWidth="1215" style="-fx-background-color:rgba(0, 0, 0, .5);" visible="false">
+                <ImageView fx:id="loading">
+                    <Image url="@../images/loading.gif" />
+                </ImageView>
+            </Pane>
+
+            <!--关闭等操作-->
+            <Button fx:id="settingButton" layoutX="1115.0" layoutY="5.0" style="-fx-background-color: transparent">
+                <graphic>
+                    <ImageView>
+                        <Image url="@../images/setting_normal.png" />
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button fx:id="minButton" layoutX="1145.0" layoutY="5.0" style="-fx-background-color: transparent">
+                <graphic>
+                    <ImageView>
+                        <Image url="@../images/min_normal.png" />
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button fx:id="closeButton" layoutX="1175.0" layoutY="5.0" style="-fx-background-color: transparent">
+                <graphic>
+                    <ImageView>
+                        <Image url="@../images/close_normal.png" />
+                    </ImageView>
+                </graphic>
+            </Button>
+        </Pane>
+    </children>
 </FlowPane>
 
