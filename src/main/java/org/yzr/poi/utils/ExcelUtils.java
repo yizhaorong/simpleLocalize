@@ -51,24 +51,25 @@ public class ExcelUtils {
                     }
                     switch (cell.getCellType()) {
                         case Cell.CELL_TYPE_BLANK:
-                            break;
                         case Cell.CELL_TYPE_BOOLEAN:
-                            break;
                         case Cell.CELL_TYPE_ERROR:
-                            break;
                         case Cell.CELL_TYPE_FORMULA:
-                            break;
                         case Cell.CELL_TYPE_NUMERIC:
-                            break;
                         case Cell.CELL_TYPE_STRING:
-                            if (Constant.END_KEY.equalsIgnoreCase(cell.getStringCellValue())) {
+                            String value = "";
+                            try {
+                                value = cell.getStringCellValue();
+                            } catch (Exception e){
+                                e.printStackTrace();
+                            }
+                            if (Constant.END_KEY.equalsIgnoreCase(value)) {
                                 started = false;
                                 continue;
-                            }
-                            if (keyColumn == cell.getColumnIndex()) {
-                                localize.setKey(cell.getStringCellValue());
-                            } else {
-                                localize.putValue(cell.getStringCellValue());
+
+                            } else if (keyColumn == cell.getColumnIndex() && !value.trim().equalsIgnoreCase("")) {
+                                localize.setKey(value);
+                            } else if(cell.getColumnIndex() > keyColumn && localize.getKey() != null) {
+                                localize.putValue(value);
                             }
                             break;
                         default:
@@ -111,15 +112,13 @@ public class ExcelUtils {
                         Localize androidDataLocalize = new Localize();
 
                         String key = currentLocalize.getKey().trim();
-                        int currentLocalizeValueCount = currentLocalize.getValues().size();
-                        if (currentLocalizeValueCount <= i) {
+                        String localValue = currentLocalize.getValues().get(i).trim();
+                        if (localValue.trim().equalsIgnoreCase("")) {
                             if (!key.toLowerCase().equals(Constant.COMMENT_KEY)) {
                                 copyWriteContainer.getLostCopyWrites().add(key);
                             }
                             continue;
                         }
-
-                        String localValue = currentLocalize.getValues().get(i).trim();
                         localValue = localValue.replaceAll("\"", "\\\\\"");
                         dataLocalize.setKey(key);
                         dataLocalize.putValue(localValue);
