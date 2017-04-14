@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.yzr.poi.view.Button?>
 
-<FlowPane fx:id="mainPane" prefHeight="764" prefWidth="1215" style="-fx-background-color: rgb(98,172,25); -fx-background-radius: 5px;" xmlns="http://javafx.com/javafx/8.0.112-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.yzr.poi.controller.MainController">
+<FlowPane fx:id="mainPane" prefHeight="764" prefWidth="1215" style="-fx-background-color: rgb(98,172,25); -fx-background-radius: 5px;" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.yzr.poi.controller.MainController">
     <children>
         <Pane>
             <!--背景-->
@@ -60,7 +60,7 @@
                     </graphic>
                 </Button>
 
-                <Button fx:id="generateButton" alignment="CENTER" layoutX="920" layoutY="160.0" style="-fx-background-color: transparent;">
+                <Button fx:id="generateButton" alignment="CENTER" layoutX="920" layoutY="170.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/generate.png" />
@@ -68,7 +68,7 @@
                     </graphic>
                 </Button>
 
-                <Button fx:id="showLostButton" layoutX="1100.0" layoutY="560.0" text="查看缺失文案" onAction="#showLostStage" textFill="WHITE" style="-fx-background-color: #008FEB;" visible="false">
+                <Button fx:id="showLostButton" layoutX="1100.0" layoutY="560.0" onAction="#showLostStage" style="-fx-background-color: #008FEB;" text="查看缺失文案" textFill="WHITE" visible="false">
               <font>
                  <Font name="System Bold" size="14.0" />
               </font></Button>
@@ -108,4 +108,3 @@
         </Pane>
     </children>
 </FlowPane>
-

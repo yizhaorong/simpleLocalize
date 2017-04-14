@@ -243,7 +243,11 @@ public class MainController {
 
     protected void setting() {
         settingButton.setSelected(false);
-        if (SettingController.getSettingStage() != null) return;
+        if (SettingController.getSettingStage() != null) {
+            SettingController.getSettingStage().show();
+            SettingController.getSettingStage().toFront();
+            return;
+        }
         try {
             Stage settingStage = new Stage();
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/layout/setting_stage.fxml"));
@@ -264,7 +268,11 @@ public class MainController {
 
     @FXML
     protected void showLostStage() {
-        if (LostController.getLostStage() != null) return;
+        if (LostController.getLostStage() != null) {
+            LostController.getLostStage().show();
+            LostController.getLostStage().toFront();
+            return;
+        }
         try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/layout/lost_stage.fxml"));
