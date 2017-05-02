@@ -143,7 +143,7 @@ public class ExcelUtils {
     }
 
 
-    public static void generate(CopyWriteContainer copyWriteContainer) throws Exception  {
+    public static void generate(CopyWriteContainer copyWriteContainer, CopyWriteContainer defaultCopyWriteContainer) throws Exception  {
         String language = copyWriteContainer.getLanguage();
         if (language.equals("cn")) {
             Boolean ignoreChinese = Boolean.valueOf(PropertiesManager.getProperty(Constant.IGNORE_CHINESE));
@@ -152,8 +152,8 @@ public class ExcelUtils {
 
         Boolean useDefaultValue = new Boolean(PropertiesManager.getProperty(Constant.USE_DEFAULT_VALUE));
         if (useDefaultValue) {
-            String defaultValue = PropertiesManager.getProperty(Constant.DEFAULT_VALUE);
             for (String key : copyWriteContainer.getLostCopyWrites()) {
+                String defaultValue = getDefaultValue(key, defaultCopyWriteContainer);
                 Localize localize = new Localize();
                 localize.setKey(key);
                 localize.putValue(defaultValue);
@@ -251,5 +251,14 @@ public class ExcelUtils {
         Pattern pattern = Pattern.compile(Constant.LANGUAGE_EX);
         Matcher matcher = pattern.matcher(key);
         return matcher.matches();
+    }
+
+    private static String getDefaultValue(String key, CopyWriteContainer copyWriteContainer) {
+        for (Localize localize : copyWriteContainer.getCopyWrites()) {
+            if (localize.getKey().equals(key)) {
+                return localize.getValue();
+            }
+        }
+        return PropertiesManager.getProperty(Constant.DEFAULT_VALUE);
     }
 }

@@ -151,8 +151,15 @@ public class MainController {
                 new Thread(() -> {
                     try {
                         List<CopyWriteContainer> copyWriteContainers = ExcelUtils.read(filePathLabel.getText());
+                        CopyWriteContainer defaultCopyWriteContainer = new CopyWriteContainer();
                         for (CopyWriteContainer copyWriteContainer : copyWriteContainers) {
-                            ExcelUtils.generate(copyWriteContainer);
+                            if (copyWriteContainer.getLanguage().equalsIgnoreCase("cn")) {
+                                defaultCopyWriteContainer = copyWriteContainer;
+                                break;
+                            }
+                        }
+                        for (CopyWriteContainer copyWriteContainer : copyWriteContainers) {
+                            ExcelUtils.generate(copyWriteContainer, defaultCopyWriteContainer);
                         }
 
                         lostList.clear();
