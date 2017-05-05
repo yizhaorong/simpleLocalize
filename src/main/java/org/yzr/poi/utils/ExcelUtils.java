@@ -119,6 +119,7 @@ public class ExcelUtils {
                             }
                             continue;
                         }
+                        localValue = localValue.replaceAll("\n", "");
                         localValue = localValue.replaceAll("\"", "\\\\\"");
                         dataLocalize.setKey(key);
                         dataLocalize.putValue(localValue);
