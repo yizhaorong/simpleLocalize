@@ -48,7 +48,13 @@
       <artifactId>freemarker</artifactId>
       <version>2.3.23</version>
     </dependency>
-    <!-- 修复Mac上 Dock不显示图标bug -->
+    <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.8.0</version>
+    </dependency>
+      <!-- 修复Mac上 Dock不显示图标bug -->
     <dependency>
         <groupId>com.apple</groupId>
         <artifactId>AppleJavaExtensions</artifactId>

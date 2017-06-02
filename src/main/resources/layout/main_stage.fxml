@@ -68,10 +68,19 @@
                     </graphic>
                 </Button>
 
+                <Button fx:id="generateAnimationConfigButton" alignment="CENTER" layoutX="64.0" layoutY="490.0" style="-fx-background-color: transparent;">
+                    <graphic>
+                        <ImageView>
+                            <Image url="@../images/generate_animation_config.png" />
+                        </ImageView>
+                    </graphic>
+                </Button>
+
                 <Button fx:id="showLostButton" layoutX="1100.0" layoutY="560.0" onAction="#showLostStage" style="-fx-background-color: #008FEB;" text="查看缺失文案" textFill="WHITE" visible="false">
-              <font>
-                 <Font name="System Bold" size="14.0" />
-              </font></Button>
+                  <font>
+                     <Font name="System Bold" size="14.0" />
+                  </font>
+                </Button>
             </Pane>
 
             <!--处理中-->

@@ -36,6 +36,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class MainController {
 
@@ -50,6 +51,8 @@ public class MainController {
     @FXML private Button serverButton;
 
     @FXML private Button generateButton;
+
+    @FXML private Button generateAnimationConfigButton;
 
     @FXML private Pane maskView;
 
@@ -218,6 +221,26 @@ public class MainController {
                 scale.setCycleCount(1);
                 scale.play();
             }
+        });
+
+        generateAnimationConfigButton.setOnMouseClicked(event -> {
+            generateAnimationConfigButton.setDisable(true);
+            maskView.setVisible(true);
+            new Thread(() -> {
+                try {
+                    List<Map<String, Object>> effects = ExcelUtils.read4Effects(filePathLabel.getText());
+                    ExcelUtils.createEffectsFile(effects);
+                    if (effects.size() > 0) {
+                        FileUtils.showInFinder();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Platform.runLater(() -> {
+                    maskView.setVisible(false);
+                    generateAnimationConfigButton.setDisable(false);
+                });
+            }).start();
         });
 
         double loadingFitWidth = loading.getImage().getWidth();
