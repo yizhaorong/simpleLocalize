@@ -276,8 +276,14 @@ public class ExcelUtils {
                 Localize localize = new Localize();
                 localize.setKey(key);
                 localize.putValue(defaultValue);
+
+                String androidDefaultValue = getAndroidDefaultValue(key, defaultCopyWriteContainer);
+                Localize androidLocalize = new Localize();
+                androidLocalize.setKey(key);
+                androidLocalize.putValue(androidDefaultValue);
+
                 copyWriteContainer.getCopyWrites().add(localize);
-                copyWriteContainer.getAndroidCopyWrites().add(localize);
+                copyWriteContainer.getAndroidCopyWrites().add(androidLocalize);
             }
         }
 
@@ -394,6 +400,15 @@ public class ExcelUtils {
 
     private static String getDefaultValue(String key, CopyWriteContainer copyWriteContainer) {
         for (Localize localize : copyWriteContainer.getCopyWrites()) {
+            if (localize.getKey().equals(key)) {
+                return localize.getValue();
+            }
+        }
+        return PropertiesManager.getProperty(Constant.DEFAULT_VALUE);
+    }
+
+    private static String getAndroidDefaultValue(String key, CopyWriteContainer copyWriteContainer) {
+        for (Localize localize : copyWriteContainer.getAndroidCopyWrites()) {
             if (localize.getKey().equals(key)) {
                 return localize.getValue();
             }
