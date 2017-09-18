@@ -34,9 +34,7 @@ import org.yzr.poi.model.ButtonState;
 
 import java.io.File;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MainController {
 
@@ -146,7 +144,7 @@ public class MainController {
         serverButton.setSelected(!new Boolean(PropertiesManager.getProperty(Constant.SERVER_SWITCH)));
 
         generateButton.setImage("/images/generate.png", ButtonState.Normal);
-        generateButton.setMouseClicked(event -> {
+        generateButton.setMouseClicked((MouseEvent event) -> {
             System.out.println("生成");
 
             if (generateButton.isSelected()) {
@@ -154,15 +152,23 @@ public class MainController {
                 new Thread(() -> {
                     try {
                         List<CopyWriteContainer> copyWriteContainers = ExcelUtils.read(filePathLabel.getText());
-                        CopyWriteContainer defaultCopyWriteContainer = new CopyWriteContainer();
+                        List<CopyWriteContainer> defaultCopyWriteContainers = new ArrayList<>(2);
                         for (CopyWriteContainer copyWriteContainer : copyWriteContainers) {
-                            if (copyWriteContainer.getLanguage().equalsIgnoreCase("en")) {
-                                defaultCopyWriteContainer = copyWriteContainer;
-                                break;
+                            if (copyWriteContainer.getLanguage().equalsIgnoreCase("cn")
+                                    || copyWriteContainer.getLanguage().equalsIgnoreCase("en")) {
+                                defaultCopyWriteContainers.add(copyWriteContainer);
                             }
                         }
+
+                        defaultCopyWriteContainers.sort(new Comparator<CopyWriteContainer>() {
+                            @Override
+                            public int compare(CopyWriteContainer o1, CopyWriteContainer o2) {
+                                return o1.getLanguage().compareToIgnoreCase(o2.getLanguage());
+                            }
+                        });
+
                         for (CopyWriteContainer copyWriteContainer : copyWriteContainers) {
-                            ExcelUtils.generate(copyWriteContainer, defaultCopyWriteContainer);
+                            ExcelUtils.generate(copyWriteContainer, defaultCopyWriteContainers);
                         }
 
                         lostList.clear();

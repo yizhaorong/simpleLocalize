@@ -262,7 +262,7 @@ public class ExcelUtils {
     }
 
 
-    public static void generate(CopyWriteContainer copyWriteContainer, CopyWriteContainer defaultCopyWriteContainer) throws Exception  {
+    public static void generate(CopyWriteContainer copyWriteContainer, List<CopyWriteContainer> defaultCopyWriteContainers) throws Exception  {
         String language = copyWriteContainer.getLanguage();
         if (language.equals("cn")) {
             Boolean ignoreChinese = Boolean.valueOf(PropertiesManager.getProperty(Constant.IGNORE_CHINESE));
@@ -272,12 +272,12 @@ public class ExcelUtils {
         Boolean useDefaultValue = new Boolean(PropertiesManager.getProperty(Constant.USE_DEFAULT_VALUE));
         if (useDefaultValue) {
             for (String key : copyWriteContainer.getLostCopyWrites()) {
-                String defaultValue = getDefaultValue(key, defaultCopyWriteContainer);
+                String defaultValue = getDefaultValue(key, defaultCopyWriteContainers);
                 Localize localize = new Localize();
                 localize.setKey(key);
                 localize.putValue(defaultValue);
 
-                String androidDefaultValue = getAndroidDefaultValue(key, defaultCopyWriteContainer);
+                String androidDefaultValue = getAndroidDefaultValue(key, defaultCopyWriteContainers);
                 Localize androidLocalize = new Localize();
                 androidLocalize.setKey(key);
                 androidLocalize.putValue(androidDefaultValue);
@@ -398,21 +398,27 @@ public class ExcelUtils {
         return matcher.matches();
     }
 
-    private static String getDefaultValue(String key, CopyWriteContainer copyWriteContainer) {
-        for (Localize localize : copyWriteContainer.getCopyWrites()) {
-            if (localize.getKey().equals(key)) {
-                return localize.getValue();
+    private static String getDefaultValue(String key, List<CopyWriteContainer> defaultCopyWriteContainers) {
+        for (CopyWriteContainer copyWriteContainer:defaultCopyWriteContainers) {
+            for (Localize localize : copyWriteContainer.getCopyWrites()) {
+                if (localize.getKey().equals(key)) {
+                    return localize.getValue();
+                }
             }
         }
+
         return PropertiesManager.getProperty(Constant.DEFAULT_VALUE);
     }
 
-    private static String getAndroidDefaultValue(String key, CopyWriteContainer copyWriteContainer) {
-        for (Localize localize : copyWriteContainer.getAndroidCopyWrites()) {
-            if (localize.getKey().equals(key)) {
-                return localize.getValue();
+    private static String getAndroidDefaultValue(String key, List<CopyWriteContainer> defaultCopyWriteContainers) {
+        for (CopyWriteContainer copyWriteContainer:defaultCopyWriteContainers) {
+            for (Localize localize : copyWriteContainer.getAndroidCopyWrites()) {
+                if (localize.getKey().equals(key)) {
+                    return localize.getValue();
+                }
             }
         }
+
         return PropertiesManager.getProperty(Constant.DEFAULT_VALUE);
     }
 }
