@@ -163,7 +163,7 @@ public class MainController {
                         defaultCopyWriteContainers.sort(new Comparator<CopyWriteContainer>() {
                             @Override
                             public int compare(CopyWriteContainer o1, CopyWriteContainer o2) {
-                                return o1.getLanguage().compareToIgnoreCase(o2.getLanguage());
+                                return o2.getLanguage().compareToIgnoreCase(o1.getLanguage());
                             }
                         });
 
