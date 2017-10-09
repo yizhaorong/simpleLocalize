@@ -11,7 +11,8 @@ public class Constant {
     // 类路径
     public static final String CLASS_PATH = CLASS_URL.getPath();
 
-    public static final String LANGUAGE_EX = "([a-zA-Z])+[_]?([a-zA-Z])*";
+    public static final String LANGUAGE_EX = "([a-zA-Z])+[-]?([a-zA-Z])*";
+    public static final String SIMPLIFIED_CHINESE = "zh-CN";
     public static final String START_KEY = "[key]";
     public static final String END_KEY = "[end]";
     public static final String COMMENT_KEY = "[comment]";

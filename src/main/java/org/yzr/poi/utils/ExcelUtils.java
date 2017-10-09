@@ -175,7 +175,7 @@ public class ExcelUtils {
                     localValue = localValue.replaceAll("\n", "");
                     localValue = localValue.replaceAll("\"", "\\\\\"");
                     String languageKey = localize.getValues().get(j);
-                    if (!localValue.equalsIgnoreCase("") && !languageKey.equalsIgnoreCase("cn")) {
+                    if (!localValue.equalsIgnoreCase("") && !languageKey.equalsIgnoreCase(Constant.SIMPLIFIED_CHINESE)) {
                         Map<String , Object> word = new HashMap<>();
                         word.put("language", languageKey);
                         word.put("word", localValue);
@@ -264,10 +264,10 @@ public class ExcelUtils {
 
     public static void generate(CopyWriteContainer copyWriteContainer, List<CopyWriteContainer> defaultCopyWriteContainers) throws Exception  {
         String language = copyWriteContainer.getLanguage();
-        if (language.equals("cn")) {
-            Boolean ignoreChinese = Boolean.valueOf(PropertiesManager.getProperty(Constant.IGNORE_CHINESE));
-            if (ignoreChinese) return;
-        }
+//        if (language.equals(Constant.SIMPLIFIED_CHINESE)) {
+//            Boolean ignoreChinese = Boolean.valueOf(PropertiesManager.getProperty(Constant.IGNORE_CHINESE));
+//            if (ignoreChinese) return;
+//        }
 
         Boolean useDefaultValue = new Boolean(PropertiesManager.getProperty(Constant.USE_DEFAULT_VALUE));
         if (useDefaultValue) {
@@ -345,16 +345,24 @@ public class ExcelUtils {
                     if (ignoreEnglishSuffix) {
                         language = "";
                     } else {
-                        language = "-en";
+                        language = "en";
                     }
-                    filePath = basePath +"values" + language + File.separator + PropertiesManager.getProperty(code+"FileName");
-                } else {
+                } else if (language.equals("zh-CN")) {
+                    language = "zh-rCN";
+                } else if (language.equals("zh-TW")) {
+                    language = "zh-rTW";
+                } else if (language.equals("id")) {
                     Boolean fixIdLanguage = Boolean.valueOf(PropertiesManager.getProperty(Constant.FIX_ID_LANGUAGE));
-                    if (language.equals("id") && fixIdLanguage) {
+                    if (fixIdLanguage) {
                         language = "in";
                     }
-                    filePath = basePath +"values-" + language + File.separator + PropertiesManager.getProperty(code+"FileName");
                 }
+
+                String values = "values-";
+                if (language.length() < 1) {
+                    values = "values";
+                }
+                filePath = basePath + values + language + File.separator + PropertiesManager.getProperty(code+"FileName");
 
             } else if (code.equalsIgnoreCase(Constant.SERVER_KEY)) {
                 filePath = basePath + PropertiesManager.getProperty(code+"FileName") + language + ".properties";

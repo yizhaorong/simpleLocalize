@@ -154,7 +154,7 @@ public class MainController {
                         List<CopyWriteContainer> copyWriteContainers = ExcelUtils.read(filePathLabel.getText());
                         List<CopyWriteContainer> defaultCopyWriteContainers = new ArrayList<>(2);
                         for (CopyWriteContainer copyWriteContainer : copyWriteContainers) {
-                            if (copyWriteContainer.getLanguage().equalsIgnoreCase("cn")
+                            if (copyWriteContainer.getLanguage().equalsIgnoreCase(Constant.SIMPLIFIED_CHINESE)
                                     || copyWriteContainer.getLanguage().equalsIgnoreCase("en")) {
                                 defaultCopyWriteContainers.add(copyWriteContainer);
                             }
