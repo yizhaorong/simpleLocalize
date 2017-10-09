@@ -28,7 +28,7 @@ public class SettingController extends VBox {
 
     @FXML private org.yzr.poi.view.Button closeButton;
 
-    @FXML private CheckBox ignoreChinese;
+//    @FXML private CheckBox ignoreChinese;
 
     @FXML private CheckBox ignoreAndroidEnglish;
 
@@ -61,10 +61,10 @@ public class SettingController extends VBox {
 
         closeButton.setImage("/images/close_normal.png", ButtonState.Normal);
 
-        ignoreChinese.setOnAction(event -> {
-            PropertiesManager.setProperty(Constant.IGNORE_CHINESE, ignoreChinese.isSelected() ? Constant.TRUE : Constant.FALSE);
-        });
-        ignoreChinese.setSelected(new Boolean(PropertiesManager.getProperty(Constant.IGNORE_CHINESE)));
+//        ignoreChinese.setOnAction(event -> {
+//            PropertiesManager.setProperty(Constant.IGNORE_CHINESE, ignoreChinese.isSelected() ? Constant.TRUE : Constant.FALSE);
+//        });
+//        ignoreChinese.setSelected(new Boolean(PropertiesManager.getProperty(Constant.IGNORE_CHINESE)));
 
         ignoreAndroidEnglish.setOnAction(event -> {
             PropertiesManager.setProperty(Constant.IGNORE_ENGLISH_SUFFIX, ignoreAndroidEnglish.isSelected() ? Constant.TRUE : Constant.FALSE);
