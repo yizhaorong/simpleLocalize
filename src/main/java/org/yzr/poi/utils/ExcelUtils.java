@@ -358,9 +358,14 @@ public class ExcelUtils {
                     }
                 }
 
+                Boolean useNewAndroid = new Boolean(PropertiesManager.getProperty(Constant.USE_NEW_ANDROID));
                 String values = "values-";
                 if (language.length() < 1) {
                     values = "values";
+                } else {
+                    if (useNewAndroid) {
+                        values = "values" + File.separator + "values-b-";
+                    }
                 }
                 filePath = basePath + values + language + File.separator + PropertiesManager.getProperty(code+"FileName");
 

@@ -30,7 +30,8 @@
             <!--<CheckBox fx:id="ignoreChinese" layoutX="10" layoutY="10" text="忽略中文备注文案" />-->
             <CheckBox fx:id="ignoreAndroidEnglish" layoutX="10" layoutY="10" text="忽略Android英文文件夹后缀" />
             <CheckBox fx:id="fixAndroidIdLanguage" layoutX="10" layoutY="35" text="修复Android印尼语key" />
-            <CheckBox fx:id="useDefault" layoutX="10" layoutY="60" text="缺失文案填充默认值" />
+            <CheckBox fx:id="useNewAndroid" layoutX="10" layoutY="60" text="使用安卓新标准" />
+            <CheckBox fx:id="useDefault" layoutX="10" layoutY="85" text="缺失文案填充默认值" />
             <!--<Label layoutX="10" layoutY="90.0" prefWidth="60" text="默认文案:" />-->
             <!--<TextField fx:id="defaultValue" layoutX="70.0" layoutY="85.0" />-->
         </Pane>

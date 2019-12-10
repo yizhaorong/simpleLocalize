@@ -34,6 +34,8 @@ public class SettingController extends VBox {
 
     @FXML private CheckBox fixAndroidIdLanguage;
 
+    @FXML private CheckBox useNewAndroid;
+
     @FXML private CheckBox useDefault;
 
     @FXML private TextField defaultValue;
@@ -61,11 +63,6 @@ public class SettingController extends VBox {
 
         closeButton.setImage("/images/close_normal.png", ButtonState.Normal);
 
-//        ignoreChinese.setOnAction(event -> {
-//            PropertiesManager.setProperty(Constant.IGNORE_CHINESE, ignoreChinese.isSelected() ? Constant.TRUE : Constant.FALSE);
-//        });
-//        ignoreChinese.setSelected(new Boolean(PropertiesManager.getProperty(Constant.IGNORE_CHINESE)));
-
         ignoreAndroidEnglish.setOnAction(event -> {
             PropertiesManager.setProperty(Constant.IGNORE_ENGLISH_SUFFIX, ignoreAndroidEnglish.isSelected() ? Constant.TRUE : Constant.FALSE);
         });
@@ -76,27 +73,15 @@ public class SettingController extends VBox {
         });
         fixAndroidIdLanguage.setSelected(new Boolean(PropertiesManager.getProperty(Constant.FIX_ID_LANGUAGE)));
 
+        useNewAndroid.setOnAction(event -> {
+            PropertiesManager.setProperty(Constant.USE_NEW_ANDROID, useNewAndroid.isSelected() ? Constant.TRUE : Constant.FALSE);
+        });
+        useNewAndroid.setSelected(new Boolean(PropertiesManager.getProperty(Constant.USE_NEW_ANDROID)));
+
         useDefault.setOnAction(event -> {
             PropertiesManager.setProperty(Constant.USE_DEFAULT_VALUE, useDefault.isSelected() ? Constant.TRUE : Constant.FALSE);
-//            defaultValue.setDisable(!useDefault.isSelected());
         });
         useDefault.setSelected(new Boolean(PropertiesManager.getProperty(Constant.USE_DEFAULT_VALUE)));
-
-//        defaultValue.setDisable(!useDefault.isSelected());
-//        defaultValue.setText(PropertiesManager.getProperty(Constant.DEFAULT_VALUE));
-//        defaultValue.focusedProperty().addListener(new ChangeListener<Boolean>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-//                if (!newValue) {
-//                    String text = defaultValue.getText();
-//                    if (text.trim().length() < 1) {
-//                        text = "##我是没有翻译的##";
-//                    }
-//                    PropertiesManager.setProperty(Constant.DEFAULT_VALUE, text);
-//                }
-//            }
-//        });
-
     }
 
     @FXML
