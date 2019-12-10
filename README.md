@@ -9,7 +9,8 @@
 ### 必要环境
 需要安装`Java1.8`以上环境
 ### 下载 
-[可执行文件](bin/EasyLocalize-jar-with-dependencies.jar)
+[可执行文件](https://github.com/yizhaorong/simpleLocalize/releases/download/v1.0.0/localize-1.0.0-jar-with-dependencies.jar)
+
 ### 运行
 1. 双击生成的jar包，并将Excel文件拖到界面中
 2. 选择要生成的文件类型，并点击快速生成
